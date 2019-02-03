@@ -1,23 +1,19 @@
 package com.michi.imdbservice.requests;
 
-import com.michi.imdbservice.Controller;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-
-@RequestMapping("/addFilm")
+@RequestMapping("/addFilmToUserWatchList")
 @RestController
-public class AddFilmToUser {
+public class AddFilmToUserWatchList {
 
     @RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public String addFilmToUser(@RequestParam("userId") int userId, @RequestParam("filmId") String filmId,
-                                @RequestParam("review") String review,@RequestParam("grade") int grade, @RequestParam("seen") boolean seen) {
+    public String addFilmToUser(@RequestParam("userId") int userId, @RequestParam("filmId") String filmId) {
 
-        String response = Controller.addFilmToUsersList(filmId, userId, review, grade, seen);
+        String response = "";//Controller.addFilmToUsersWatchList(filmId, userId);
         return "{\"status\":\"" + response + "\"}";
     }
 }

@@ -1,5 +1,7 @@
 package com.michi.imdbservice.requests;
 
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,7 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Omdb {
+@Service
+public class OmdbService {
     //example of omdb request
     //http://www.omdbapi.com/?s=blade+runner&apikey=e088609c
 

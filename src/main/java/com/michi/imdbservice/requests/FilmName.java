@@ -17,7 +17,7 @@ public class FilmName {
     @RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public String filmName(@RequestParam("name") String name) {
         try {
-            var json = Omdb.searchByNameShort(name);
+            var json = OmdbService.searchByNameShort(name);
             var films = JSONConverter.convertFilms(json);
             Gson gson = new Gson();
             return gson.toJson(films);

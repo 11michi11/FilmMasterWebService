@@ -1,19 +1,18 @@
 package com.michi.imdbservice.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "films")
+@Table(name = "film")
 public class Film {
 
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "title")
     private String title;
     @Column(name = "type")
     private String type;
-    @Id @Column(name = "imdbid")
+    @Column(name = "imdbid")
     private String imdbID;
     @Column(name = "posterurl")
     private String posterURL;
@@ -29,6 +28,14 @@ public class Film {
         this.imdbID = imdbID;
         this.posterURL = posterURL;
         this.year = year;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -74,7 +81,8 @@ public class Film {
     @Override
     public String toString() {
         return "Film{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", type='" + type + '\'' +
                 ", imdbID='" + imdbID + '\'' +
                 ", posterURL='" + posterURL + '\'' +
@@ -89,16 +97,18 @@ public class Film {
 
         Film film = (Film) o;
 
-        if (!year.equals(film.year)) return false;
+        if (id != null ? !id.equals(film.id) : film.id != null) return false;
         if (title != null ? !title.equals(film.title) : film.title != null) return false;
         if (type != null ? !type.equals(film.type) : film.type != null) return false;
         if (imdbID != null ? !imdbID.equals(film.imdbID) : film.imdbID != null) return false;
-        return posterURL != null ? posterURL.equals(film.posterURL) : film.posterURL == null;
+        if (posterURL != null ? !posterURL.equals(film.posterURL) : film.posterURL != null) return false;
+        return year != null ? year.equals(film.year) : film.year == null;
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (imdbID != null ? imdbID.hashCode() : 0);
         result = 31 * result + (posterURL != null ? posterURL.hashCode() : 0);
