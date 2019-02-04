@@ -1,26 +1,39 @@
 package com.michi.imdbservice.model;
 
-import javax.persistence.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "film")
 public class Film {
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "title")
-    private String title;
-    @Column(name = "type")
-    private String type;
+    @Id
     @Column(name = "imdbid")
     private String imdbID;
+    @Column(name = "title")
+    @SerializedName("Title")
+    private String title;
+    @Column(name = "type")
+    @SerializedName("Type")
+    private String type;
     @Column(name = "posterurl")
+    @SerializedName("Poster")
     private String posterURL;
     @Column(name = "year")
+    @SerializedName("Year")
     private String year;
 
-
-    public Film() { }
+    public Film() {
+    }
 
     public Film(String title, String type, String imdbID, String posterURL, String year) {
         this.title = title;
@@ -30,12 +43,12 @@ public class Film {
         this.year = year;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public static List<Film> fromJsonToList(String json) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+        JsonArray search = jsonObject.get("Search").getAsJsonArray();
+        return gson.fromJson(search, new TypeToken<List<Film>>() {
+        }.getType());
     }
 
     public String getTitle() {
@@ -81,8 +94,7 @@ public class Film {
     @Override
     public String toString() {
         return "Film{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", type='" + type + '\'' +
                 ", imdbID='" + imdbID + '\'' +
                 ", posterURL='" + posterURL + '\'' +
@@ -97,7 +109,6 @@ public class Film {
 
         Film film = (Film) o;
 
-        if (id != null ? !id.equals(film.id) : film.id != null) return false;
         if (title != null ? !title.equals(film.title) : film.title != null) return false;
         if (type != null ? !type.equals(film.type) : film.type != null) return false;
         if (imdbID != null ? !imdbID.equals(film.imdbID) : film.imdbID != null) return false;
@@ -107,8 +118,7 @@ public class Film {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
+        int result = (title != null ? title.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (imdbID != null ? imdbID.hashCode() : 0);
         result = 31 * result + (posterURL != null ? posterURL.hashCode() : 0);
