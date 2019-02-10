@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.michi.imdbservice.model.Film;
+import com.michi.imdbservice.domain.Film;
 
 import java.util.Arrays;
 import java.util.LinkedList;

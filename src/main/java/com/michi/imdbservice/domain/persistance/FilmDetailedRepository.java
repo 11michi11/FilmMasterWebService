@@ -1,9 +1,7 @@
-package com.michi.imdbservice.model.persistance;
+package com.michi.imdbservice.domain.persistance;
 
-import com.michi.imdbservice.model.FilmDetailed;
+import com.michi.imdbservice.domain.FilmDetailed;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 public interface FilmDetailedRepository extends JpaRepository<FilmDetailed, String> {
 }

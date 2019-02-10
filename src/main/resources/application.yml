@@ -6,6 +6,8 @@ spring:
         password:   root123
         driverClassName: org.postgresql.Driver
     # The SQL dialect makes Hibernate generate better SQL for the chosen database
+    jackson:
+        default-property-inclusion: NON_NULL
     jpa:
         properties:
             hibernate:

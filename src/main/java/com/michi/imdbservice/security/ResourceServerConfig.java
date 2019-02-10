@@ -1,4 +1,4 @@
-package com.michi.imdbservice;
+package com.michi.imdbservice.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +16,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .frameOptions()
             .disable()
             .and()
-            .authorizeRequests().antMatchers("/films/**").authenticated();
+            .authorizeRequests()
+                .antMatchers("/films/**").authenticated()
+                .antMatchers("/register").permitAll();
     }
 }

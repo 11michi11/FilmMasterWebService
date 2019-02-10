@@ -1,4 +1,4 @@
-package com.michi.imdbservice;
+package com.michi.imdbservice.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

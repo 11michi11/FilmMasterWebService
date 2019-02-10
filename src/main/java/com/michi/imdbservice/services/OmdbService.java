@@ -1,9 +1,10 @@
 package com.michi.imdbservice.services;
 
-import com.michi.imdbservice.model.Film;
-import com.michi.imdbservice.model.FilmDetailed;
-import com.michi.imdbservice.model.persistance.FilmDetailedRepository;
-import com.michi.imdbservice.model.persistance.OmdbDetailedFilm;
+import com.michi.imdbservice.domain.Film;
+import com.michi.imdbservice.domain.FilmDetailed;
+import com.michi.imdbservice.domain.persistance.FilmDetailedRepository;
+import com.michi.imdbservice.domain.persistance.FilmRepository;
+import com.michi.imdbservice.domain.persistance.OmdbDetailedFilm;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -13,7 +14,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class OmdbService {
@@ -21,10 +21,12 @@ public class OmdbService {
     //http://www.omdbapi.com/?s=blade+runner&apikey=e088609c
 
     private FilmDetailedRepository detailedRepository;
+    private FilmRepository filmRepository;
 
 
-    public OmdbService(FilmDetailedRepository detailedRepository) {
+    public OmdbService(FilmDetailedRepository detailedRepository, FilmRepository filmRepository) {
         this.detailedRepository = detailedRepository;
+        this.filmRepository = filmRepository;
     }
 
     public List<Film> searchByNameShort(String title) throws OmdbConnectionException {
@@ -54,6 +56,7 @@ public class OmdbService {
 
     private void storeInCache(FilmDetailed film) {
         detailedRepository.save(film);
+        filmRepository.save(new Film(film.title, film.type, film.imdbID, film.posterURL, film.year));
     }
 
     private String makeRequest(String requestUrl) throws OmdbConnectionException {
@@ -74,6 +77,10 @@ public class OmdbService {
                 response.append(inputLine);
             }
             in.close();
+
+            if (responseCode != 200)
+                throw new OmdbConnectionException("Error in response: " + response.toString());
+
             return response.toString();
         } catch (IOException e) {
             throw new OmdbConnectionException("Couldn't connect to Omdb server");

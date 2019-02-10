@@ -1,4 +1,4 @@
-package com.michi.imdbservice;
+package com.michi.imdbservice.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

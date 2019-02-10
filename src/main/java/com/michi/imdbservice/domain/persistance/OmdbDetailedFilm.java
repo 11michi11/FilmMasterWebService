@@ -1,12 +1,12 @@
-package com.michi.imdbservice.model.persistance;
+package com.michi.imdbservice.domain.persistance;
 
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.michi.imdbservice.model.Film;
-import com.michi.imdbservice.model.FilmDetailed;
+import com.michi.imdbservice.domain.Film;
+import com.michi.imdbservice.domain.FilmDetailed;
 
 
 /*
